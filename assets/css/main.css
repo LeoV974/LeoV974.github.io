@@ -197,10 +197,10 @@ input, select, textarea {
 		}
 
 			h1.major:after {
-				background-image: -moz-linear-gradient(to right, #5e42a6, #b74e91);
-				background-image: -webkit-linear-gradient(to right, #5e42a6, #b74e91);
-				background-image: -ms-linear-gradient(to right, #5e42a6, #b74e91);
-				background-image: linear-gradient(to right, #5e42a6, #b74e91);
+				background-image: -moz-linear-gradient(to right, #1a3ea9, #b74e91);
+				background-image: -webkit-linear-gradient(to right, #1033a6, #b74e91);
+				background-image: -ms-linear-gradient(to right, #29d5db, #b74e91);
+				background-image: linear-gradient(to right, #12e3e3, #b74e91);
 				-moz-transition: max-width 0.2s ease;
 				-webkit-transition: max-width 0.2s ease;
 				-ms-transition: max-width 0.2s ease;
@@ -2356,7 +2356,7 @@ input, select, textarea {
 
 		select option {
 			color: #ffffff;
-			background: #312450;
+			background: #73f01a;
 		}
 
 		select:focus::-ms-value {
@@ -2536,7 +2536,7 @@ input, select, textarea {
 			}
 
 				.wrapper.style1 .icon.major:before {
-					color: #016064;
+					color: #44e1e7;
 				}
 
 				.wrapper.style1-alt .icon.major:before {
@@ -3022,7 +3022,7 @@ input, select, textarea {
 				-webkit-transition: opacity 1s ease;
 				-ms-transition: opacity 1s ease;
 				transition: opacity 1s ease;
-				background: rgba(49, 36, 80, 0.9);
+				background: rgba(211, 207, 219, 0.9);
 				content: '';
 				display: block;
 				height: 100%;
@@ -3236,7 +3236,7 @@ input, select, textarea {
 			}
 
 		.wrapper.alt {
-			background-color: #000000;
+			background-color: #141acf;
 		}
 
 		.wrapper.style1 {
@@ -3370,7 +3370,7 @@ input, select, textarea {
 		display: -webkit-flex;
 		display: -ms-flex;
 		display: flex;
-		background-color: #5e42a6;
+		background-color: #14464D;
 		cursor: default;
 		padding: 1.75em 2em;
 	}
@@ -3524,7 +3524,7 @@ input, select, textarea {
 
 	#sidebar {
 		padding: 2.5em 2.5em 0.5em 2.5em ;
-		background: #312450;
+		background: #0a2932;
 		cursor: default;
 		height: 100vh;
 		left: 0;
@@ -3759,16 +3759,15 @@ input, select, textarea {
 				right: 0;
 				width: 100%;
 			}
-
 			#sidebar nav a:before {
-				background: #3c2c62;
+				background: #d6dada;
 			}
 
 			#sidebar nav a:after {
-				background-image: -moz-linear-gradient(to right, #5e42a6, #b74e91);
-				background-image: -webkit-linear-gradient(to right, #5e42a6, #b74e91);
-				background-image: -ms-linear-gradient(to right, #5e42a6, #b74e91);
-				background-image: linear-gradient(to right, #5e42a6, #b74e91);
+				background-image: -moz-linear-gradient(to right, #e8e4f4, #b74e91);
+				background-image: -webkit-linear-gradient(to right, #23a098, #b74e91);
+				background-image: -ms-linear-gradient(to right, #23a098, #b74e91);
+				background-image: linear-gradient(to right, #23a098, #b74e91);
 				-moz-transition: max-width 0.2s ease;
 				-webkit-transition: max-width 0.2s ease;
 				-ms-transition: max-width 0.2s ease;
