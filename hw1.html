@@ -48,8 +48,14 @@
 		-->
 
 		<h2>Overview</h2>
-		Give a high-level overview of what you implemented in this homework. Think about what you've built as a whole. Share your thoughts on what interesting things you've learned from completing the homework.
-
+		In this project, I developed a rasterizer that renders images from SVG files, where triangles serve as the fundamental building blocks. 
+		The implementation focused on three essential functionalities: Supersampling for anti-aliasing, Barycentric Coordinate Interpolation for smooth gradient coloring, 
+		and Texture Mapping enhanced by mipmaps and bilinear filtering for high-quality texturing. Supersampling directly tackles aliasing, smoothing out jagged edges 
+		to produce cleaner, more visually appealing images. Barycentric coordinates allow for precise interpolation across triangles, 
+		enabling the creation of smooth color gradients and more natural shading. Texture mapping leverages mipmaps to 
+		efficiently manage different levels of detail and uses bilinear interpolation to blend texels for a refined, anti-aliased texture application. Overall, this project 
+		was a lot of fun. Tweaking the three essential functionalities provided clear visual confirmation that my implementation was correct. 
+		It introduced me to a new form of debugging (visual debugging), and it made me appreciate more what's behind everyday images and video games.
 		<h2>Task 1: Drawing Single-Color Triangles</h2>
         <p>
             Rasterization of a triangle is the process of converting a triangle's continuous representation in a 2D coordinate space into discrete pixels on
