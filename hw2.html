@@ -28,7 +28,7 @@
 	<body>
 		<div class="container">
 		<h1>CS184/284A Spring 2025 Homework 2 Write-Up</h1>
-		<div style="text-align: center;">Names: </div>
+		<div style="text-align: center;">Leo Villani</div>
 
 		<br>
 
@@ -39,7 +39,7 @@
 		Link to GitHub repository: <a href="https://github.com/cal-cs184-student/sp25-hw2-leooooo">https://github.com/cal-cs184-student/sp25-hw2-leooooo</a>
 
 		<figure>
-			<img src="images/teapot.png" alt="Teapot" style="width:50%"/>
+			<img src="images/teapot.png" alt="Teapot" style="width:30%"/>
 			<!--<figcaption>You can add images with captions!</figcaption>-->
 		</figure>
 
@@ -53,37 +53,60 @@
 		<h2>Section I: Bezier Curves and Surfaces</h2>
 
 		<h3>Part 1: Bezier curves with 1D de Casteljau subdivision</h3>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+		De Casteljau's algorithm is a recursive method for evaluating Bezier curves. Given a set of control points and a parameter \(0 \leq t \leq 1\) the algorithm repeatedly applies LERPs
+		to adjacent points to generate new sets of points until only a single point remains. That final point is the point on the Bezier curve at the parameter \(t\). For implementation
+		we have an evaluate step function that takes a vector of control points (possibly an intermediate list) and applies the LERP between each pair of points returning a new vector of intermediate points. 
+		When there is only 1 point left we return it.
 
-		<p>Here is an example 2x2 gridlike structure using an HTML table. Each <b>tr</b> is a row and each <b>td</b> is a column in that row. You might find this useful for framing and showing your result images in an organized fashion.</p>
+		<p>Here are screenshots of each step / level of the evaluation from the original control points down to the final evaluated point and associated curve.</p>
 		<div style="display: flex; flex-direction: column; align-items: center;">
 			<table style="width: 100%; text-align: center; border-collapse: collapse;">
 			  <tr>
 				<td style="text-align: center;">
-				  <img src="images/teapot.png" width="400px"/>
-				  <figcaption>Caption goes here.</figcaption>
+				  <img src="hw2images/step0.jpg" width="400px"/>
 				</td>
 				<td style="text-align: center;">
-				  <img src="images/teapot.png" width="400px"/>
-				  <figcaption>Caption goes here.</figcaption>
+				  <img src="hw2images/step1.jpg" width="400px"/>
 				</td>
 			  </tr>
 			  <tr>
 				<td style="text-align: center;">
-				  <img src="images/teapot.png" width="400px"/>
-				  <figcaption>Caption goes here.</figcaption>
+				  <img src="hw2images/step2.jpg" width="400px"/>
 				</td>
 				<td style="text-align: center;">
-				  <img src="images/teapot.png" width="400px"/>
-				  <figcaption>Caption goes here.</figcaption>
+				  <img src="hw2images/step3.jpg" width="400px"/>
+				</td>
+			  </tr>
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="hw2images/step4.jpg" width="400px"/>
+				</td>
+				<td style="text-align: center;">
+				  <img src="hw2images/step5.jpg" width="400px"/>
 				</td>
 			  </tr>
 			</table>
 		</div>
-
+		<div style="text-align: center; margin: 20px 0;">
+            <img src="hw2images/step6.jpg" width="400px" style="display: block; margin: 0 auto;">
+        </div>
+		<p>Here is a slightly different Bezier curve by moving the original control points around and modifying the parameter \(t\).</p>
+		<div style="text-align: center; margin: 20px 0;">
+            <img src="hw2images/perturbed.jpg" width="400px" style="display: block; margin: 0 auto;">
+        </div>
 		<h3>Part 2: Bezier surfaces with separable 1D de Casteljau</h3>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+		De Casteljau's algorithm extends naturally from curves to surfaces by applying the algorithm in two separable stages. First, each row of control points (from a 2D grid) forms a Bezier curve. 
+		First, the algorithm is applied along the \(u\) direction using the 1D de Casteljau process to each row to compute an intermediate point for that row. 
+		The intermediate points from each row now form a new set of control points along the \(v\) direction. Then the De Casteljau algorithm is applied to these points 
+		using the parameter \(v\) to compute the final point on the surface. For the implementation, I implemented a function similar to the 1D case, evaluateStep, which 
+		interpolates between adjacent points. Using evaluateStep, the evaluate1D function recursively computes a single point from a vector of points. For the surface 
+		evaluation, the evaluate function first  computes an intermediate point for each row using evaluate1D with parameter \(u\). These intermediate points are 
+		then passed to another call of evaluate1D with parameter \(v\) to obtain the final Bezier surface point.
+		<div style="text-align: center; margin: 20px 0;">
+            <img src="hw2images/teapot_task2.jpg" width="400px" style="display: block; margin: 0 auto;">
+        </div>
 
+		
 		<h2>Section II: Triangle Meshes and Half-Edge Data Structure</h2>
 
 		<h3>Part 3: Area-weighted vertex normals</h3>
