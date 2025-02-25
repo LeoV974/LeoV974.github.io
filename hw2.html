@@ -103,17 +103,54 @@
 		evaluation, the evaluate function first  computes an intermediate point for each row using evaluate1D with parameter \(u\). These intermediate points are 
 		then passed to another call of evaluate1D with parameter \(v\) to obtain the final Bezier surface point.
 		<div style="text-align: center; margin: 20px 0;">
-            <img src="hw2images/teapot_task2.jpg" width="400px" style="display: block; margin: 0 auto;">
+            <img src="hw2images/teapot_task2.jpg" width="600px" style="display: block; margin: 0 auto;">
         </div>
 
-		
+
 		<h2>Section II: Triangle Meshes and Half-Edge Data Structure</h2>
 
 		<h3>Part 3: Area-weighted vertex normals</h3>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+		The implementation computes the area-weighted normal by iterating over the neighboring ring of triangles around the vertex. 
+		For each adjacent triangle, it calculates the face normal using the cross product of two edge vectors and weights it by the triangle's area. 
+		The weighted normals are summed, and the final normal is obtained by normalizing this sum. 
+		This ensures that larger triangles have a greater influence, leading to a smoother normal representation.
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="hw2images/teapot_task4.jpg" width="400px"/>
+				  <figcaption>Flat shading using face normals</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="hw2images/teapot_task4smooth.jpg" width="400px"/>
+				  <figcaption>Phong shading using vertex normals</figcaption>
+				</td>
+			  </tr>
+			</table>
+		</div>
 
 		<h3>Part 4: Edge flip</h3>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+		Implementing the edge-flip operation required careful pointer manipulation to ensure proper reassignments. 
+		I began by sketching the halfedge connectivity on paper, labeling each relevant element and mapping out the necessary changes. 
+		This visualization helped clarify how to reassign halfedges, vertices, and faces while maintaining a valid mesh structure. 
+		Before proceeding, I checked that the target edge was not on the boundary. Using a halfedge traversal similar to the function printNeighbourPositions, 
+		I created temporary variables for all affected elements and then methodically reassigned pointers based on my initial sketches. 
+		By following this structured approach, I avoided major debugging issues.
+
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="hw2images/teapottask5nonflipped.jpg" width="400px"/>
+				  <figcaption>Non-flipped</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="hw2images/teapottask5diamondflipped.jpg" width="400px"/>
+				  <figcaption>Flipped diamond pattern</figcaption>
+				</td>
+			  </tr>
+			</table>
+		</div>
 
 		<h3>Part 5: Edge split</h3>
 		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
