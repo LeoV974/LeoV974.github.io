@@ -153,24 +153,123 @@
 		</div>
 
 		<h3>Part 5: Edge split</h3>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
-		<h3>Part 6: Loop subdivision for mesh upsampling</h3>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
-		<h2>(Optional) Section III: Potential Extra Credit - Art Competition: Model something Creative</h2>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
-		<h2>Additional Notes (please remove)</h2>
-		<ul>
-			<li>You can also add code if you'd like as so: <code>code code code</code></li>
-			<li>If you'd like to add math equations, 
-				<ul>
-					<li>You can write inline equations like so: \( a^2 + b^2 = c^2 \)</li>
-					<li>You can write display equations like so: \[ a^2 + b^2 = c^2 \]</li>
-				</ul>
-			</li>
-		</ul>
+		For implementing edge splitting, I took a similar, careful, and somewhat tedious approach as in Task 4. 
+		I started by drawing out all the halfedges, edges, and vertices involved in the operation. 
+		Then, I visualized the desired structure of the new triangles after the split and accounted for the new vertex and edges that needed to be added. 
+		By systematically tracking all the necessary pointer updates, I ensured that the mesh remained well-formed and consistent. Here is a picture of my diagram:
+		<div style="text-align: center; margin: 20px 0;">
+            <img src="hw2images/debug.jpg" width="500px" style="display: block; margin: 0 auto;">
+        </div>
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="hw2images/cownormal.jpg" width="400px"/>
+				  <figcaption>Normal Cow</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="hw2images/cowsplit.jpg" width="400px"/>
+				  <figcaption>Cow with Edge Splits</figcaption>
+				</td>
+				<td style="text-align: center;">
+					<img src="hw2images/cowsplitflip.jpg" width="360px"/>
+					<figcaption>Cow with both Edge Splits and Flips</figcaption>
+				  </td>
+			  </tr>
+			</table>
 		</div>
+		<h3>Part 6: Loop subdivision for mesh upsampling</h3>
+		<p>To implement Loop subdivision, I followed several key steps. First, I computed new positions for all vertices in the input mesh using the Loop subdivision rule. 
+			This rule assigns weights to neighboring vertices so that each vertex's new position is a weighted average of its original position and those of its neighbors. 
+			I stored these computed positions in the temporary newPosition field and marked each original vertex as “old” by setting its isNew flag accordingly.
+			Next, I computed the updated positions for the new vertices that will be inserted at edge midpoints. 
+			The rule for these “odd” vertices is based on a weighted average of the two vertices forming the edge and the two vertices opposite the edge in the adjacent triangles. 
+			I stored the result in each edge's temporary newPosition field. After the vertex and edge positions were computed, I split all the edges of the original mesh. 
+			To avoid an infinite loop from continuously splitting new edges, I ensured that only edges from the original mesh were processed by adding isNew flags to my task5. During each split, I transferred the precomputed edge position to the new vertex and updated the isNew flag on the resulting edges appropriately.
+			Finally, to regularize the mesh topology, I iterated over the new edges and flipped any edge that connected an original vertex to a new vertex. This flip 
+			ensures that the resulting mesh has the desired structure. 
+			In the last step, I copied the new positions stored in the temporary fields into the actual vertex positions of the mesh</p>
+		<p>
+			After applying Loop subdivision, I noticed that the mesh's sharp features tend to persist to some extent because the vertex updates use weighted averages that still 
+			“remember” the original crease. In my tests, the lower right and lower left regions of the unsplit mesh retained noticeably sharper corners and edges. 
+			However, when I pre-split those edges before subdivision, additional vertices were inserted along the crease, which allowed the averaging process to blend 
+			the positions more evenly. This resulted in smoother, more gradual transitions at those formerly sharp features. The screenshots below clearly show that the 
+			mesh without pre-splitting appears crisper along its edges, 
+			while the pre-split version exhibits a softer, more rounded appearance.</p>
+		<p> Below is an example demonstrating how a cube, when subjected to repeated loop subdivision without pre-processing, 
+			gradually becomes asymmetric. This occurs due to the presence of irregular edge configurations that introduce extraordinary vertices, 
+			disrupting the symmetry of the original shape. A uniformly preprocessed cube, using strategic splits, maintains symmetry 
+			during subdivision by preventing extraordinary vertices. This highlights how initial mesh topology 
+			influences subdivision outcomes, without preprocessing asymmetry grows over iterations while a well-structured mesh preserves the cube's form.</p>
+			<div style="display: flex; flex-direction: column; align-items: center;">
+				<table style="width: 100%; text-align: center; border-collapse: collapse;">
+				  <tr>
+					<td style="text-align: center;">
+					  <img src="hw2images/asycube1.jpg" width="400px"/>
+					  <figcaption>Asymmetric Cube x1</figcaption>
+					</td>
+					<td style="text-align: center;">
+					  <img src="hw2images/asycube4.jpg" width="400px"/>
+					  <figcaption>Asymmetric Cube x4</figcaption>
+					</td>
+					<td style="text-align: center;">
+						<img src="hw2images/asycube16.jpg" width="360px"/>
+						<figcaption>Asymmetric Cube x16</figcaption>
+					</td>
+					<td style="text-align: center;">
+						<img src="hw2images/asycube64.jpg" width="360px"/>
+						<figcaption>Asymmetric Cube x64</figcaption>
+					</td>
+				  </tr>
+				</table>
+			</div>
+			<div style="display: flex; flex-direction: column; align-items: center;">
+				<table style="width: 100%; text-align: center; border-collapse: collapse;">
+				  <tr>
+					<td style="text-align: center;">
+					  <img src="hw2images/symcube1.jpg" width="400px"/>
+					  <figcaption>Symmetric Cube x1</figcaption>
+					</td>
+					<td style="text-align: center;">
+					  <img src="hw2images/symcube4.jpg" width="400px"/>
+					  <figcaption>Symmetric Cube x4</figcaption>
+					</td>
+					<td style="text-align: center;">
+						<img src="hw2images/symcube16.jpg" width="360px"/>
+						<figcaption>Symmetric Cube x16</figcaption>
+					</td>
+					<td style="text-align: center;">
+						<img src="hw2images/symcube64.jpg" width="360px"/>
+						<figcaption>Symmetric Cube x64</figcaption>
+					</td>
+				  </tr>
+				</table>
+			</div>
+		<p>Here are some extra images of upsampling:</p>
+		
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="hw2images/ring1.jpg" width="400px"/>
+				  <figcaption>Ring x1</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="hw2images/ring4.jpg" width="400px"/>
+				  <figcaption>Ring Cube x4</figcaption>
+				</td>
+				<td style="text-align: center;">
+					<img src="hw2images/ring16.jpg" width="360px"/>
+					<figcaption>Ring x16</figcaption>
+				</td>
+				<td style="text-align: center;">
+					<img src="hw2images/ring64.jpg" width="360px"/>
+					<figcaption>Ring x64</figcaption>
+				</td>
+			  </tr>
+			</table>
+		</div>
+
+	</div>
 	</body>
 </html>
