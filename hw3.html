@@ -47,35 +47,40 @@
 		Give a high-level overview of what you implemented in this homework. Think about what you've built as a whole. Share your thoughts on what interesting things you've learned from completing the homework.
 
 		<h2>Part 1: Ray Generation and Scene Intersection</h2>
-		You start by converting normalized image coordinates to a corresponding point on a virtual sensor (located at \(z=-1\) in camera space). 
+		<p>For ray generation you start by converting normalized image coordinates to a corresponding point on a virtual sensor (located at \(z=-1\) in camera space). 
 		A ray is then constructed from the camera's position through this sensor point and is transformed into world space using the camera's rotation matrix and position. 
-		The near and far clipping distances ensure that only visible intersections are considered.
-
-		<!-- <p>Here is an example 2x2 gridlike structure using an HTML table. Each <b>tr</b> is a row and each <b>td</b> is a column in that row. You might find this useful for framing and showing your result images in an organized fashion.</p>
+		The near and far clipping distances ensure that only visible intersections are considered.</p>
+		<p>
+			Determining intersections between rays and primitive geometric objects requires using implicit vector definitions of their spatial geometry.
+			For triangle intersection we start with Moller-Trumbore algorithm to find the time of intersection and the barycentric coordinates of the intersection. We also
+			interpolate the surface normals for shading purposes. This method efficiently determines whether a ray hits a triangle and, if so, where we check that the time 
+			is within certain bounds and that the barycentric coordinates are all in \([0,1]\), accurately computes the intersection details for subsequent rendering steps.
+		</p>
+		<p>
+			For the sphere intersection we solve for intersecting t-values by solving an appropriate quadratic equation. Checking the discriminant we know how many
+			solutions to look for and update with the closest intersection.</p>
+		<p>
+			Here are some generated images with normal shading:
+		</p>
+		
 		<div style="display: flex; flex-direction: column; align-items: center;">
 			<table style="width: 100%; text-align: center; border-collapse: collapse;">
 			  <tr>
 				<td style="text-align: center;">
-				  <img src="images/example_image.png" width="400px"/>
-				  <figcaption>Caption goes here.</figcaption>
+				  <img src="hw3images/nanner.png" width="400px"/>
+				  <figcaption>Banana</figcaption>
 				</td>
 				<td style="text-align: center;">
-				  <img src="images/example_image.png" width="400px"/>
-				  <figcaption>Caption goes here.</figcaption>
-				</td>
-			  </tr>
-			  <tr>
-				<td style="text-align: center;">
-				  <img src="images/example_image.png" width="400px"/>
-				  <figcaption>Caption goes here.</figcaption>
+				  <img src="hw3images/gems.png" width="400px"/>
+				  <figcaption>Gems</figcaption>
 				</td>
 				<td style="text-align: center;">
-				  <img src="images/example_image.png" width="400px"/>
-				  <figcaption>Caption goes here.</figcaption>
-				</td>
+					<img src="hw3images/spheres.png" width="360px"/>
+					<figcaption>Spheres</figcaption>
+				  </td>
 			  </tr>
 			</table>
-		</div> -->
+		</div>
 		
 		<h2>Part 2: Bounding Volume Hierarchy</h2>
 		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
@@ -105,3 +110,29 @@
 		</div>
 	</body>
 </html>
+<!-- 
+
+<div style="display: flex; flex-direction: column; align-items: center;">
+	<table style="width: 100%; text-align: center; border-collapse: collapse;">
+	  <tr>
+		<td style="text-align: center;">
+		  <img src="images/example_image.png" width="400px"/>
+		  <figcaption>Caption goes here.</figcaption>
+		</td>
+		<td style="text-align: center;">
+		  <img src="images/example_image.png" width="400px"/>
+		  <figcaption>Caption goes here.</figcaption>
+		</td>
+	  </tr>
+	  <tr>
+		<td style="text-align: center;">
+		  <img src="images/example_image.png" width="400px"/>
+		  <figcaption>Caption goes here.</figcaption>
+		</td>
+		<td style="text-align: center;">
+		  <img src="images/example_image.png" width="400px"/>
+		  <figcaption>Caption goes here.</figcaption>
+		</td>
+	  </tr>
+	</table>
+</div> -->
