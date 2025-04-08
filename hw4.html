@@ -50,10 +50,179 @@
 		Give a high-level overview of what you implemented in this homework. Think about what you've built as a whole. Share your thoughts on what interesting things you've learned from completing the homework.
 
 		<h2>Part 1: Masses and springs</h2>
+		Here is a screenshot of scene/pinned2.json where you can clearly see the cloth wireframe which shows the structure of my  point masses and springs.
+		
+		<div style="text-align: center; margin: 20px 0;">
+            <img src="hw4images/pinned2.png" width="500px" style="display: block; margin: 0 auto;">
+        </div>
+		To see the constraints specifically here are screenshots of (1) without any shearing constraints, (2) with only shearing constraints, and (3) with all constraints.
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="hw4images/1.png" width="360px"/>
+				  <figcaption>(1)</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="hw4images/2.png" width="360px"/>
+				  <figcaption>(2)</figcaption>
+				</td>
+				<td style="text-align: center;">
+					<img src="hw4images/3.png" width="360px"/>
+					<figcaption>(3)</figcaption>
+				  </td>
+			  </tr>
+			</table>
+		</div>
+		
+		<h2>Part 2: Simulation via numerical integration</h2>
+		<p>Here I experimented with some the parameters in the simulation.</p>
+		<h4>Spring Constant</h4>
+		As the spring constant decreases, the spring gets less stiff. Looking at the images from left to right, 
+		you can see that the spring constant increases by a factor of 10 each time. 
+		The cloth looks a lot more flexible with the lower spring constant, when \(k=500\) it stretches much more compared to when \(k=50000\)
+		even though gravity is the same in both simulations.
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="hw4images/p2500.png" width="360px"/>
+				</td>
+				<td style="text-align: center;">
+				  <img src="hw4images/p25000.png" width="360px"/>
+				</td>
+				<td style="text-align: center;">
+					<img src="hw4images/p250000.png" width="360px"/>
+				  </td>
+			  </tr>
+			</table>
+		</div>
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="hw4images/s500.png" width="360px"/>
+				  <figcaption>500</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="hw4images/s5000.png" width="360px"/>
+				  <figcaption>5000</figcaption>
+				</td>
+				<td style="text-align: center;">
+					<img src="hw4images/s50000.png" width="360px"/>
+					<figcaption>50000</figcaption>
+				  </td>
+			  </tr>
+			</table>
+		</div>
+
+		<h4>Density</h4>
+		Density is a property of the point masses, not the springs. 
+		Increasing the density affects the cloth in a similar way to lowering the spring constant. The effect also seems similar to the spring 
+		case just inversely so hence the images being in a "reverse" order.
+		This makes sense when you consider Newton's Second Law, which says that force is proportional to mass. 
+		So, with greater density, the cloth becomes more responsive to external forces—like gravity—in the simulation.
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="hw4images/d1dot5.png" width="360px"/>
+				</td>
+				<td style="text-align: center;">
+				  <img src="hw4images/d15.png" width="360px"/>
+				</td>
+				<td style="text-align: center;">
+					<img src="hw4images/d150.png" width="360px"/>
+				  </td>
+			  </tr>
+			</table>
+		</div>
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="hw4images/sd1dot5.png" width="360px"/>
+				  <figcaption>1.5</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="hw4images/sd15.png" width="360px"/>
+				  <figcaption>15</figcaption>
+				</td>
+				<td style="text-align: center;">
+					<img src="hw4images/sd150.png" width="360px"/>
+					<figcaption>150</figcaption>
+				  </td>
+			  </tr>
+			</table>
+		</div>
+
+		<h4>Damping</h4>
+		The effect of damping isn't as clear in still images but when watching the real time simulation
+		it plays a big role in how quickly the system settles. Higher damping values help the cloth come to rest faster. 
+		Both images shown were taken after long simulation times. In the left image, with 0% damping, the cloth never fully 
+		settles—small where we can small ripples and oscillations remain, even after a long time. In contrast, the right image,
+		with 1% damping, shows a cloth that has completely settled, as you can tell from its smooth, undisturbed shape. This is because small
+		changes in the cloth arent just damped but persist for 0% damping.
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="hw4images/0damp.png" width="450px"/>
+				</td>
+				<td style="text-align: center;">
+				  <img src="hw4images/1damp.png" width="450px"/>
+				</td>
+			  </tr>
+			</table>
+		</div>
+
+
+		<p>Here is a picture of the 4 pinned corners shaded cloth in its final resting state.</p>
+		<figure>
+			<img src="hw4images/pinned4.png" alt="Cloth draped over sphere" style="width:70%"/>
+		</figure>
+
+		<h2>Part 3: Handling collisions with other objects</h2>
+		Here I implemented collisions with spheres and planes.
+		<h4>Spheres:</h4>
+		<p>It checks if the point mass is inside the sphere by comparing the squared distance from the 
+			sphere's center with the squared radius. If the point is inside, it is projected outwards to the sphere's surface, using the 
+			appropriate direction vector with friction applied to dampen the movement.
+		</p>
+		<h4>Planes:</h4> 
+		<p>The algorithm checks if the point mass is below the plane (using the dot product with the normal). 
+			If so, it moves it along the plane normal to just above the plane (with a SURFACE_OFFSET)
+			 and adjusts the movement based on friction, ensuring the point mass doesn't "stick" unrealistically.
+		</p>
+
+
+
+		
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="hw4images/spherep3.png" width="450px"/>
+				  <figcaption>Sphere</figcaption>
+				</td>
+				
+				<td style="text-align: center;">
+				  <img src="hw4images/lyingplane.png" width="450px"/>
+				  <figcaption>Cloth lying on the plane</figcaption>
+				</td>
+				
+			  </tr>
+			</table>
+		</div>
+		
+		<h2>Part 4: Handling self-collisions</h2>
 		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
-		<p>Here is an example 2x2 gridlike structure using an HTML table. Each <b>tr</b> is a row and each <b>td</b> is a column in that row. You might find this useful for framing and showing your result images in an organized fashion.</p>
-		<div style="display: flex; flex-direction: column; align-items: center;">
+		<h2>Part 5: Shaders</h2>
+		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+		
+<!-- <div style="display: flex; flex-direction: column; align-items: center;">
 			<table style="width: 100%; text-align: center; border-collapse: collapse;">
 			  <tr>
 				<td style="text-align: center;">
@@ -76,33 +245,9 @@
 				</td>
 			  </tr>
 			</table>
-		</div>
+		</div> -->
 
-		<h2>Part 2: Simulation via numerical integration</h2>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
-		<h2>Part 3: Handling collisions with other objects</h2>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
-		<h2>Part 4: Handling self-collisions</h2>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
-		<h2>Part 5: Shaders</h2>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
-		<h2>(Optional) Part 6: Extra Credit - Additional cloth simulation features!</h2>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-		
-		<h2>Additional Notes (please remove)</h2>
-		<ul>
-			<li>You can also add code if you'd like as so: <code>code code code</code></li>
-			<li>If you'd like to add math equations, 
-				<ul>
-					<li>You can write inline equations like so: \( a^2 + b^2 = c^2 \)</li>
-					<li>You can write display equations like so: \[ a^2 + b^2 = c^2 \]</li>
-				</ul>
-			</li>
-		</ul>
 		</div>
 	</body>
 </html>
